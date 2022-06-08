@@ -10,7 +10,5 @@ public:
 public:
 	wxButton** buttons;
 	wxTextCtrl* text;
-	wxPanel* panel;
-	wxPanel* panel2;
 };
 

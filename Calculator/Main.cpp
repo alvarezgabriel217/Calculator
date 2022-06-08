@@ -4,27 +4,32 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(400, 150), wxSiz
 {
 
 
-	panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(500, 50));
-
-	wxPanel* panel2 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(500, 575));
-
-	//panel->SetBackgroundColour(wxColor(200, 100, 100));
-	//this->SetBackgroundColour(wxColor(204, 204, 204));
+	wxPanel* panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(500, 50));
+	wxPanel* panel2 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(500, 550));
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
-	text = new wxTextCtrl(panel, wxID_ANY, "", wxPoint(100, 0), wxSize(300, 50), wxTE_RIGHT);
-	sizer->Add(panel, 0, wxEXPAND | wxBOTTOM, 5);
+	wxFont textFont(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
+	wxFont buttonFont(21, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
+
+	text = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(500, 50), wxTE_RIGHT);
+
+	text->SetFont(textFont);
+
+	sizer->Add(panel, 0, wxEXPAND);
 	sizer->Add(panel2, 1, wxEXPAND);
 
 
-	buttons = new wxButton * [7 * 3];
+	buttons = new wxButton * [6 * 4];
 
 	wxGridSizer* grid = new wxGridSizer(6, 4, 0, 0);
 
-	for (int i = 0; i < 21; i++)
+	int num = 9;
+	for (int i = 0; i < 24; i++)
 	{
+
 		buttons[i] = new wxButton(panel2, 10000 + i, wxEmptyString);
+		buttons[i]->SetFont(buttonFont);
 		grid->Add(buttons[i], 1, wxEXPAND);
 		switch (i)
 		{
@@ -38,43 +43,47 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(400, 150), wxSiz
 			buttons[i]->SetLabel("DEC");
 			break;
 		case 3:
+			buttons[i]->SetLabel("C");
+			break;
+		case 4:
+			buttons[i]->SetLabel("%");
+			break;
+		case 5:
 			buttons[i]->Enable(false);
 			break;
+		case 6:
+			buttons[i]->Enable(false);
+			break;
+		case 7:
+			buttons[i]->SetLabel("*");
+			break;
+		case 11:
+			buttons[i]->SetLabel("/");
+			break;
+		case 15:
+			buttons[i]->SetLabel("+");
+			break;
+		case 19:
+			buttons[i]->SetLabel("-");
+			break;
+		case 20:
+			buttons[i]->SetLabel("+/-");
+			break;
+		case 22:
+			buttons[i]->Enable(false);
+			break;
+		case 23:
+			buttons[i]->SetLabel("=");
+			break;
 		default:
-			buttons[i]->SetLabel(std::to_string(i-3));
+			buttons[i]->SetLabel(std::to_string(num));
+			num--;
 			break;
 		}
 
 	}
 
-	//for (int x = 0; x < 7; x++)
-	//{
-	//	for (int y = 0; y < 3; y++)
-	//	{
-	//		buttons[y * 7 + x] = new wxButton(this, 10000 + (y * 7 + x), wxEmptyString, wxDefaultPosition, wxSize(100, 25));
-	//		//grid->Add(buttons[y * 7 + x], 0, wxEXPAND);
-	//		sizer->Add(buttons[y * 7 + x], 1);
-
-	//		if (y * 7 + x == 0)
-	//		{
-	//			buttons[y * 7 + x]->SetLabel("BIN");
-	//		}
-	//		else if (y * 7 + x == 7)
-	//		{
-	//			buttons[y * 7 + x]->SetLabel("HEX");
-	//		}
-	//		else if (y * 7 + x == 14)
-	//		{
-	//			buttons[y * 7 + x]->SetLabel("DEC");
-	//		}
-	//		else
-	//		{
-	//			buttons[y * 7 + x]->SetLabel(std::to_string(y));
-	//		}
-	//	}
-	//}
-
-	this->SetSizer(sizer);
+	this->SetSizerAndFit(sizer);
 	panel2->SetSizer(grid);
 	grid->Layout();
 }
