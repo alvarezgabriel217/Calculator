@@ -31,6 +31,7 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(400, 150), wxSiz
 		buttons[i] = new wxButton(panel2, 10000 + i, wxEmptyString);
 		buttons[i]->SetFont(buttonFont);
 		grid->Add(buttons[i], 1, wxEXPAND);
+		buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Main::OnButtonClicked, this);
 		switch (i)
 		{
 		case 0:
@@ -91,4 +92,27 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(400, 150), wxSiz
 Main::~Main()
 {
 	delete[] buttons;
+}
+
+void Main::OnButtonClicked(wxCommandEvent& evt)
+{
+	int id = evt.GetId() - 10000;
+
+	wxString string = text->GetLabel();
+
+	if (id == 0 || id == 1 || id == 2 || id == 20 || id == 23)
+	{
+
+	}
+	else if (id == 3)
+	{
+		string = "";
+	}
+	else
+	{
+		string += buttons[id]->GetLabel();
+	}
+	text->SetLabel(string);
+
+	evt.Skip();
 }
