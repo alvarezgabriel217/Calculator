@@ -10,5 +10,6 @@ public:
 public:
 	wxButton** buttons;
 	wxTextCtrl* text;
+	void OnButtonClicked(wxCommandEvent& evt);
 };
 
