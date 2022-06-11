@@ -1,4 +1,5 @@
 #include "Main.h"
+#include "ButtonFactory.h"
 
 wxBEGIN_EVENT_TABLE(Main, wxFrame)
 	EVT_BUTTON(10000, OnButtonClicked)
@@ -26,7 +27,7 @@ wxEND_EVENT_TABLE()
 
 Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(400, 150), wxSize(500, 600))
 {
-
+	ButtonFactory factory;
 
 	wxPanel* panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(500, 50));
 	wxPanel* panel2 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(500, 550));
@@ -52,7 +53,7 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(400, 150), wxSiz
 	for (int i = 0; i < 24; i++)
 	{
 
-		buttons[i] = new wxButton(panel2, 10000 + i, wxEmptyString);
+		buttons[i] = factory.AddButton(panel2, 10000 + i);
 		buttons[i]->SetFont(buttonFont);
 		grid->Add(buttons[i], 1, wxEXPAND);
 		//buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Main::OnButtonClicked, this);
