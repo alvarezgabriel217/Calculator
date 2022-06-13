@@ -53,60 +53,10 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(400, 150), wxSiz
 	for (int i = 0; i < 24; i++)
 	{
 
-		buttons[i] = factory.AddButton(panel2, 10000 + i);
+		buttons[i] = factory.AddButton(panel2, 10000 + i, num);
 		buttons[i]->SetFont(buttonFont);
 		grid->Add(buttons[i], 1, wxEXPAND);
 		//buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Main::OnButtonClicked, this);
-		switch (i)
-		{
-		case 0:
-			buttons[i]->SetLabel("BIN");
-			break;
-		case 1:
-			buttons[i]->SetLabel("HEX");
-			break;
-		case 2:
-			buttons[i]->SetLabel("DEC");
-			break;
-		case 3:
-			buttons[i]->SetLabel("C");
-			break;
-		case 4:
-			buttons[i]->SetLabel("%");
-			break;
-		case 5:
-			buttons[i]->Enable(false);
-			break;
-		case 6:
-			buttons[i]->Enable(false);
-			break;
-		case 7:
-			buttons[i]->SetLabel("*");
-			break;
-		case 11:
-			buttons[i]->SetLabel("/");
-			break;
-		case 15:
-			buttons[i]->SetLabel("+");
-			break;
-		case 19:
-			buttons[i]->SetLabel("-");
-			break;
-		case 20:
-			buttons[i]->SetLabel("+/-");
-			break;
-		case 22:
-			buttons[i]->Enable(false);
-			break;
-		case 23:
-			buttons[i]->SetLabel("=");
-			break;
-		default:
-			buttons[i]->SetLabel(std::to_string(num));
-			num--;
-			break;
-		}
-
 	}
 
 	this->SetSizerAndFit(sizer);
