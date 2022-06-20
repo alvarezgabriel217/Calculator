@@ -93,7 +93,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\wxWidgets-3.1.6\lib\vc_lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\wxWidgets-3.1.6\lib\vc_lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -111,7 +111,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\wxWidgets-3.1.6\lib\vc_lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\wxWidgets-3.1.6\lib\vc_lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="ButtonFactory.h" />
+    <ClInclude Include="CalculatorProcessor.h" />
     <ClInclude Include="Main.h" />
   </ItemGroup>
   <ItemGroup>
