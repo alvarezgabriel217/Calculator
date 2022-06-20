@@ -1,28 +1,30 @@
 #include "Main.h"
 #include "ButtonFactory.h"
+#include "CalculatorProcessor.h"
+#include <vector>
 
 wxBEGIN_EVENT_TABLE(Main, wxFrame)
-	EVT_BUTTON(10000, OnButtonClicked)
-	EVT_BUTTON(10001, OnButtonClicked)
-	EVT_BUTTON(10002, OnButtonClicked)
-	EVT_BUTTON(10003, OnButtonClicked)
-	EVT_BUTTON(10004, OnButtonClicked)
-	EVT_BUTTON(10007, OnButtonClicked)
-	EVT_BUTTON(10008, OnButtonClicked)
-	EVT_BUTTON(10009, OnButtonClicked)
-	EVT_BUTTON(10010, OnButtonClicked)
-	EVT_BUTTON(10011, OnButtonClicked)
-	EVT_BUTTON(10012, OnButtonClicked)
-	EVT_BUTTON(10013, OnButtonClicked)
-	EVT_BUTTON(10014, OnButtonClicked)
-	EVT_BUTTON(10015, OnButtonClicked)
-	EVT_BUTTON(10016, OnButtonClicked)
-	EVT_BUTTON(10017, OnButtonClicked)
-	EVT_BUTTON(10018, OnButtonClicked)
-	EVT_BUTTON(10019, OnButtonClicked)
-	EVT_BUTTON(10020, OnButtonClicked)
-	EVT_BUTTON(10021, OnButtonClicked)
-	EVT_BUTTON(10023, OnButtonClicked)
+EVT_BUTTON(10000, OnButtonClicked)
+EVT_BUTTON(10001, OnButtonClicked)
+EVT_BUTTON(10002, OnButtonClicked)
+EVT_BUTTON(10003, OnButtonClicked)
+EVT_BUTTON(10004, OnButtonClicked)
+EVT_BUTTON(10007, OnButtonClicked)
+EVT_BUTTON(10008, OnButtonClicked)
+EVT_BUTTON(10009, OnButtonClicked)
+EVT_BUTTON(10010, OnButtonClicked)
+EVT_BUTTON(10011, OnButtonClicked)
+EVT_BUTTON(10012, OnButtonClicked)
+EVT_BUTTON(10013, OnButtonClicked)
+EVT_BUTTON(10014, OnButtonClicked)
+EVT_BUTTON(10015, OnButtonClicked)
+EVT_BUTTON(10016, OnButtonClicked)
+EVT_BUTTON(10017, OnButtonClicked)
+EVT_BUTTON(10018, OnButtonClicked)
+EVT_BUTTON(10019, OnButtonClicked)
+EVT_BUTTON(10020, OnButtonClicked)
+EVT_BUTTON(10021, OnButtonClicked)
+EVT_BUTTON(10023, OnButtonClicked)
 wxEND_EVENT_TABLE()
 
 Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(400, 150), wxSize(500, 600))
@@ -73,13 +75,55 @@ void Main::OnButtonClicked(wxCommandEvent& evt)
 {
 	int id = evt.GetId() - 10000;
 
-	if (id == 0 || id == 1 || id == 2 || id == 20 || id == 23)
+	CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
+
+	std::vector<std::string> numbers(2);
+	wxChar symbol = ' ';
+	std::string equation;
+	int answer = 0;
+	std::string num;
+
+	if (id == 0 || id == 1 || id == 2 || id == 20)
 	{
 
 	}
 	else if (id == 3)
 	{
 		text->SetLabel("");
+	}
+	else if (id == 23)
+	{
+		equation = text->GetValue();
+		int i = 0;
+		while (equation != "")
+		{
+			if (isdigit(equation[0]))
+			{
+				numbers[i] += equation[0];
+			}
+			else
+			{
+				symbol = equation[0];
+				i++;
+			}
+			equation.erase(0, 1);
+		}
+		switch (symbol)
+		{
+		case '+':
+			answer = processor->Addition(std::stoi(numbers[0]), std::stoi(numbers[1]));
+			break;
+		case '-':
+			answer = processor->Subtraction(std::stoi(numbers[0]), std::stoi(numbers[1]));
+			break;
+		case '*':
+			answer = processor->Multiplication(std::stoi(numbers[0]), std::stoi(numbers[1]));
+			break;
+		case '/':
+			answer = processor->Division(std::stoi(numbers[0]), std::stoi(numbers[1]));
+			break;
+		}
+		text->SetLabel(std::to_string(answer));
 	}
 	else
 	{
