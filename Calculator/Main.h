@@ -1,6 +1,7 @@
 #pragma once
 
 #include "wx/wx.h"
+#include "ButtonFactory.h"
 
 class Main : public wxFrame
 {
