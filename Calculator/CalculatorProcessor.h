@@ -1,22 +1,35 @@
 #pragma once
 #include <string>
+//#include "IBaseCommand.h"
+#include <vector>
+
+class IBaseCommand;
+
 class CalculatorProcessor
 {
 private:
-	static CalculatorProcessor* _processor;
-public:
+	//static CalculatorProcessor* _processor;
 	CalculatorProcessor()
 	{
 	}
+public:
+	std::vector<IBaseCommand*> commands;
 
-	static CalculatorProcessor* GetInstance()
+	static CalculatorProcessor* GetInstance();
+
+	/*static CalculatorProcessor& GetInstance()
 	{
+		static CalculatorProcessor processor;
+		return processor;
+	}*/
+
+	/*{
 		if (_processor == nullptr)
 		{
 			_processor = new CalculatorProcessor();
 		}
 		return _processor;
-	}
+	}*/
 
 	CalculatorProcessor(CalculatorProcessor& other) = delete;
 
@@ -40,4 +53,4 @@ public:
 	}
 };
 
-CalculatorProcessor* CalculatorProcessor::_processor = nullptr;
+//CalculatorProcessor* CalculatorProcessor::_processor = nullptr;

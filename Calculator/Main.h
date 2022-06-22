@@ -12,6 +12,7 @@ public:
 	wxButton** buttons;
 	wxTextCtrl* text;
 	void OnButtonClicked(wxCommandEvent& evt);
+	wxChar symbol = ' ';
 
 	wxDECLARE_EVENT_TABLE();
 };

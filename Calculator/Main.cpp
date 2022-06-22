@@ -1,6 +1,11 @@
 #include "Main.h"
 #include "ButtonFactory.h"
 #include "CalculatorProcessor.h"
+#include "IBaseCommand.h"
+#include "Addition.h"
+#include "Subtraction.h"
+#include "Multiplication.h"
+#include "Division.h"
 #include <vector>
 
 wxBEGIN_EVENT_TABLE(Main, wxFrame)
@@ -76,9 +81,10 @@ void Main::OnButtonClicked(wxCommandEvent& evt)
 	int id = evt.GetId() - 10000;
 
 	CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
+	//CalculatorProcessor* processor;
+
 
 	std::vector<std::string> numbers(2);
-	wxChar symbol = ' ';
 	std::string equation;
 	int answer = 0;
 	std::string num;
@@ -90,6 +96,15 @@ void Main::OnButtonClicked(wxCommandEvent& evt)
 	else if (id == 3)
 	{
 		text->SetLabel("");
+		symbol = ' ';
+	}
+	else if (id == 7 || id == 11 || id == 15 || id == 19)
+	{
+		if (symbol == ' ')
+		{
+			text->AppendText(buttons[id]->GetLabel());
+			symbol = buttons[id]->GetLabel()[0];
+		}
 	}
 	else if (id == 23)
 	{
@@ -103,12 +118,11 @@ void Main::OnButtonClicked(wxCommandEvent& evt)
 			}
 			else
 			{
-				symbol = equation[0];
 				i++;
 			}
 			equation.erase(0, 1);
 		}
-		switch (symbol)
+		/*switch (symbol)
 		{
 		case '+':
 			answer = processor->Addition(std::stoi(numbers[0]), std::stoi(numbers[1]));
@@ -122,8 +136,39 @@ void Main::OnButtonClicked(wxCommandEvent& evt)
 		case '/':
 			answer = processor->Division(std::stoi(numbers[0]), std::stoi(numbers[1]));
 			break;
+		}*/
+
+		if (numbers[1] != "")
+		{
+
+			switch (symbol)
+			{
+			case '+':
+				/*Addition* add = new Addition(std::stoi(numbers[0]), std::stoi(numbers[1]));
+				processor = add->processor;
+				processor->commands.push_back(add);*/
+				processor->commands.push_back(new Addition(std::stoi(numbers[0]), std::stoi(numbers[1])));
+				break;
+			case '-':
+				processor->commands.push_back(new Subtraction(std::stoi(numbers[0]), std::stoi(numbers[1])));
+				break;
+			case '*':
+				processor->commands.push_back(new Multiplication(std::stoi(numbers[0]), std::stoi(numbers[1])));
+				break;
+			case '/':
+				processor->commands.push_back(new Division(std::stoi(numbers[0]), std::stoi(numbers[1])));
+				break;
+			}
+
+			for (int i = 0; i < processor->commands.size(); i++)
+			{
+				answer = processor->commands[i]->Execute();
+			}
+			processor->commands.clear();
+			symbol = ' ';
+
+			text->SetLabel(std::to_string(answer));
 		}
-		text->SetLabel(std::to_string(answer));
 	}
 	else
 	{
