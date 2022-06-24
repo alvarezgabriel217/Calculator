@@ -55,5 +55,4 @@ wxButton* ButtonFactory::AddButton(wxWindow* parent, int id, int &num)
 	}
 	
 	return button;
-
 }

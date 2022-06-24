@@ -1,4 +1,3 @@
-#pragma once
 #include "CalculatorProcessor.h"
 CalculatorProcessor* CalculatorProcessor::GetInstance()
 {

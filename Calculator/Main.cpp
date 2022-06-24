@@ -81,24 +81,91 @@ void Main::OnButtonClicked(wxCommandEvent& evt)
 	int id = evt.GetId() - 10000;
 
 	CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
-	//CalculatorProcessor* processor;
-
 
 	std::vector<std::string> numbers(2);
-	std::string equation;
 	int answer = 0;
-	std::string num;
 
-	if (id == 0 || id == 1 || id == 2 || id == 20)
+	if (id == 0)
 	{
-
+		if (bin == "")
+		{
+			/*int baseNumber = dec;
+			for (int i = 0; i < 26; i++)
+			{
+				if (baseNumber % 2 == 0)
+				{
+					bin = "0" + bin;
+				}
+				else
+				{
+					bin = "1" + bin;
+				}
+				baseNumber /= 2;
+			}*/
+			text->SetLabel(processor->ToBinary(dec));
+		}
+		//text->SetLabel(bin);
+	}
+	else if (id == 1)
+	{
+		/*int baseNumber = dec;
+		while (true)
+		{
+			if (baseNumber % 16 < 10)
+			{
+				hex = std::to_string(baseNumber % 16) + hex;
+			}
+			else if (baseNumber % 16 == 10)
+			{
+				hex = "A" + hex;
+			}
+			else if (baseNumber % 16 == 11)
+			{
+				hex = "B" + hex;
+			}
+			else if (baseNumber % 16 == 12)
+			{
+				hex = "C" + hex;
+			}
+			else if (baseNumber % 16 == 13)
+			{
+				hex = "D" + hex;
+			}
+			else if (baseNumber % 16 == 14)
+			{
+				hex = "E" + hex;
+			}
+			else if (baseNumber % 16 == 15)
+			{
+				hex = "F" + hex;
+			}
+			baseNumber /= 16;
+			if (baseNumber == 0)
+			{
+				hex = "0x" + hex;
+				break;
+			}
+		}*/
+		text->SetLabel(processor->ToHexadecimal(dec));
+		//text->SetLabel(hex);
+	}
+	else if (id == 2)
+	{
+		text->SetLabel(std::to_string(dec));
 	}
 	else if (id == 3)
 	{
 		text->SetLabel("");
 		symbol = ' ';
+		bin = "";
+		dec = 0;
+		hex = "";
 	}
-	else if (id == 7 || id == 11 || id == 15 || id == 19)
+	else if (id == 4)
+	{
+
+	}
+	else if (id == 7 || id == 11 || id == 15)
 	{
 		if (symbol == ' ')
 		{
@@ -106,18 +173,32 @@ void Main::OnButtonClicked(wxCommandEvent& evt)
 			symbol = buttons[id]->GetLabel()[0];
 		}
 	}
+	else if (id == 19)
+	{
+		text->AppendText('-');
+	}
+	else if (id == 20)
+	{
+		dec -= dec * 2;
+		equation = std::to_string(dec);
+		text->SetLabel(equation);
+	}
 	else if (id == 23)
 	{
 		equation = text->GetValue();
 		int i = 0;
 		while (equation != "")
 		{
-			if (isdigit(equation[0]))
+			if (isdigit(equation[0]) || numbers[i] == "")
 			{
 				numbers[i] += equation[0];
 			}
 			else
 			{
+				if (equation[0] == '-')
+				{
+					symbol = '-';
+				}
 				i++;
 			}
 			equation.erase(0, 1);
@@ -168,11 +249,14 @@ void Main::OnButtonClicked(wxCommandEvent& evt)
 			symbol = ' ';
 
 			text->SetLabel(std::to_string(answer));
+			dec = answer;
 		}
 	}
 	else
 	{
 		text->AppendText(buttons[id]->GetLabel());
+		equation = text->GetValue();
+		dec = std::stoi(equation);
 	}
 	evt.Skip();
 }

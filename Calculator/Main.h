@@ -13,6 +13,10 @@ public:
 	wxTextCtrl* text;
 	void OnButtonClicked(wxCommandEvent& evt);
 	wxChar symbol = ' ';
+	wxString bin;
+	wxString hex;
+	int dec;
+	std::string equation;
 
 	wxDECLARE_EVENT_TABLE();
 };
